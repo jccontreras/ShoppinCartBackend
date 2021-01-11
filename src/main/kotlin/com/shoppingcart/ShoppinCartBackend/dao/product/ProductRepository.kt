@@ -1,4 +1,4 @@
-package com.shoppingcart.ShoppinCartBackend.dao
+package com.shoppingcart.ShoppinCartBackend.dao.product
 
 import com.shoppingcart.ShoppinCartBackend.model.Product
 import org.springframework.data.jpa.repository.JpaRepository

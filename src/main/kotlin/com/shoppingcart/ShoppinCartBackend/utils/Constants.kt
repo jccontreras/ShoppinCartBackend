@@ -1,5 +1,8 @@
 package com.shoppingcart.ShoppinCartBackend.utils
 
+/*
+* Created by Ragnarok
+* */
 class Constants {
 
     companion object {
@@ -9,5 +12,9 @@ class Constants {
 
         //url for products
         const val URL_BASE_PRODUCTS = "$URL_BASE/products"
+        //url for cart
+        const val URL_BASE_CARTS = "$URL_BASE/carts"
+        //url for product_cart
+        const val URL_BASE_PRODUCTCARTS = "$URL_BASE/productcarts"
     }
 }

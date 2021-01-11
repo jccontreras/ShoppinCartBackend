@@ -1,8 +1,10 @@
-package com.shoppingcart.ShoppinCartBackend.web
+package com.shoppingcart.ShoppinCartBackend.web.cart
 
-import com.shoppingcart.ShoppinCartBackend.business.IProductBusiness
+import com.shoppingcart.ShoppinCartBackend.business.cart.ICartBusiness
+import com.shoppingcart.ShoppinCartBackend.business.product.IProductBusiness
 import com.shoppingcart.ShoppinCartBackend.exception.BusinessException
 import com.shoppingcart.ShoppinCartBackend.exception.NotFoundException
+import com.shoppingcart.ShoppinCartBackend.model.Cart
 import com.shoppingcart.ShoppinCartBackend.model.Product
 import com.shoppingcart.ShoppinCartBackend.utils.Constants
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,26 +13,32 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+/*
+* Created by Ragnarok
+* Cart Rest Controller
+* */
 @RestController
-@RequestMapping(Constants.URL_BASE_PRODUCTS)
-class ProductRestController {
+@RequestMapping(Constants.URL_BASE_CARTS)
+class CartRestController {
 
     @Autowired
-    val productBusiness: IProductBusiness? = null
+    val cartBusiness: ICartBusiness? = null
 
+    //Call to DB for load all Carts list
     @GetMapping("")
-    fun list(): ResponseEntity<List<Product>> {
+    fun list(): ResponseEntity<List<Cart>> {
         return try {
-            ResponseEntity(productBusiness!!.list(), HttpStatus.OK)
+            ResponseEntity(cartBusiness!!.list(), HttpStatus.OK)
         } catch (e: Exception) {
             ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
+    //Call to DB for load a Cart
     @GetMapping("/{id}")
-    fun load(@PathVariable("id") idProduct: Long): ResponseEntity<Product> {
+    fun load(@PathVariable("id") idCart: Long): ResponseEntity<Cart> {
         return try {
-            ResponseEntity(productBusiness!!.load(idProduct), HttpStatus.OK)
+            ResponseEntity(cartBusiness!!.load(idCart), HttpStatus.OK)
         } catch (e: BusinessException) {
             ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         } catch (e: NotFoundException) {
@@ -38,32 +46,35 @@ class ProductRestController {
         }
     }
 
+    //Call to DB for save a Cart
     @PostMapping("")
-    fun insert(@RequestBody product: Product): ResponseEntity<Any> {
+    fun insert(@RequestBody cart: Cart): ResponseEntity<Any> {
         return try {
-            productBusiness!!.save(product)
+            cartBusiness!!.save(cart)
             val responeHeaders = HttpHeaders()
-            responeHeaders.set("location", Constants.URL_BASE_PRODUCTS + "/" + product.id)
+            responeHeaders.set("location", Constants.URL_BASE_CARTS + "/" + cart.id)
             ResponseEntity(responeHeaders, HttpStatus.CREATED)
         } catch (e: BusinessException) {
             ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
+    //Call to DB for update a Cart
     @PutMapping("")
-    fun update(@RequestBody product: Product): ResponseEntity<Any> {
+    fun update(@RequestBody cart: Cart): ResponseEntity<Any> {
         return try {
-            productBusiness!!.save(product)
+            cartBusiness!!.save(cart)
             ResponseEntity(HttpStatus.OK)
         } catch (e: BusinessException) {
             ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
+    //Call to DB for delete a Cart
     @DeleteMapping("{id}")
-    fun delete(@PathVariable("id") idProduct: Long): ResponseEntity<Any> {
+    fun delete(@PathVariable("id") idCart: Long): ResponseEntity<Any> {
         return try {
-            productBusiness!!.remove(idProduct)
+            cartBusiness!!.remove(idCart)
             ResponseEntity(HttpStatus.OK)
         } catch (e: BusinessException) {
             ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)

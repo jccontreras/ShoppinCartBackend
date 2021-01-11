@@ -1,6 +1,6 @@
-package com.shoppingcart.ShoppinCartBackend.business
+package com.shoppingcart.ShoppinCartBackend.business.product
 
-import com.shoppingcart.ShoppinCartBackend.dao.ProductRepository
+import com.shoppingcart.ShoppinCartBackend.dao.product.ProductRepository
 import com.shoppingcart.ShoppinCartBackend.exception.BusinessException
 import com.shoppingcart.ShoppinCartBackend.exception.NotFoundException
 import com.shoppingcart.ShoppinCartBackend.model.Product
@@ -35,7 +35,7 @@ class ProductBusiness : IProductBusiness {
         }
 
         if (!op.isPresent) {
-            throw NotFoundException("Not found product whit id $idProduct")
+            throw NotFoundException("Not found product with id $idProduct")
         }
         return op.get()
     }
@@ -61,7 +61,7 @@ class ProductBusiness : IProductBusiness {
         }
 
         if (!op.isPresent) {
-            throw NotFoundException("Not found product whit id $idProduct")
+            throw NotFoundException("Not found product with id $idProduct")
         } else {
             try {
                 return productRepository!!.deleteById(idProduct)

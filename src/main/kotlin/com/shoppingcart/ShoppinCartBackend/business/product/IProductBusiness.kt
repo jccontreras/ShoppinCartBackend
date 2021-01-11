@@ -1,4 +1,4 @@
-package com.shoppingcart.ShoppinCartBackend.business
+package com.shoppingcart.ShoppinCartBackend.business.product
 
 import com.shoppingcart.ShoppinCartBackend.model.Product
 
